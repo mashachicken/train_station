@@ -1,0 +1,28 @@
+<h3> List of trains <h3>
+  <h3>Click on a train to see its schedule:</h3>
+  <% if @citty.trains.any? %>
+    <ul>
+      <% @trains.each do |train| %>
+        <li><a href="/trains/<%= train.id %>"><%= train.name %></a></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>There are currently no trains to display.</p>
+  <% end %>
+<h5> Buy a ticket for  <%= @citty.train.name %> in <%= @citty.name %> </h5> <br>
+<form action="/trains/<%= @citty.train.id %>/citties/<%= @citty.id %>" method="post">
+  <input name="_method" type="hidden" value="patch">
+<h3> For train operators: </h3>
+
+  <input id="name" name="name" type="text">
+
+  <button type="submit">Rename citty</button>
+</form>
+
+<form action="/trains/<%= @citty.train.id %>/citties/<%= @citty.id %>" method="post">
+  <input name="_method" type="hidden" value="delete">
+
+  <button type="submit">Delete citty</button>
+</form>
+
+<a href="/trains/<%= @citty.train.id %>">Back to <%= @citty.train.name %></a>

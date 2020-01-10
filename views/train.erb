@@ -1,0 +1,34 @@
+<h2>Train Name: <%= @train.name %></h2>
+
+<h3>Train Citties</h3>
+
+  <% if @train.citties %>
+    <ul>
+      <% @train.citties.each do |citty| %>
+        <li><a href="/trains/<%= @train.id %>/citties/<%= citty.id %>"><%= citty.name %></a></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>There are no citties listed for this train yet.</p>
+  <% end %>
+
+<h4>Add a citty:</h4>
+
+<form action="/trains/<%= @train.id %>/citties" method="post">
+  <div class="form-group">
+    <label for="citty_name">Citty name</label>
+    <input id="citty_name" name="citty_name" class="form-control" type="text">
+  </div>
+  <button type="submit" class="btn">Add citty</button>
+</form>
+
+<!-- <form action="/trains/<%= @train.id() %>/buy" method="get">
+  <input name="_method" type="hidden" value="buy">
+  <button type="submit">Buy Train</button>
+</form> -->
+<form action="/trains/<%= @train.id() %>/edit" method="get">
+  <input name="_method" type="hidden" value="edit">
+  <button type="submit">Edit Train</button>
+</form>
+
+<p><a href="/trains">Return to train list</a></p>

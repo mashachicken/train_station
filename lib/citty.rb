@@ -1,11 +1,13 @@
+require 'pry'
 class Citty
   attr_reader :id
-  attr_accessor :name, :train_id
+  attr_accessor :name, :train_id, :train_name
 
   def initialize(attributes)
     @name = attributes.fetch(:name)
     @train_id = attributes.fetch(:train_id)
     @id = attributes.fetch(:id)
+    @train_name = attributes.fetch(:train_name)
   end
   def ==(citty_to_compare)
     if citty_to_compare != nil
@@ -21,7 +23,7 @@ class Citty
       name = citty.fetch("name")
       train_id = citty.fetch("train_id").to_i
       id = citty.fetch("id").to_i
-      citties.push(Citty.new({:name => name, :train_id => train_id, :id => id}))
+      citties.push(Citty.new({:name => name, :train_id => train_id, :id => id, :train_name => train_name}))
     end
     citties
   end
@@ -34,8 +36,9 @@ class Citty
     if citty
       name = citty.fetch("name")
       train_id = citty.fetch("train_id").to_i
+      train_name = citty.fetch("train_name")
       id = citty.fetch("id").to_i
-      Citty.new({:name => name, :train_id => train_id, :id => id})
+      Citty.new({:name => name, :train_id => train_id, :id => id, :train_name => train_name})
     else
       nil
     end
@@ -51,17 +54,21 @@ class Citty
   def self.clear
     DB.exec("DELETE FROM citties *;")
   end
-  def self.find_by_train(trn_id)
+  # this method is going to look at a train_id parameter when the new city is created and check if it matches any trains IDs in the citty table and trains IDs in the train table to find the right train for that citty.
+  def self.find_by_train(trn_id, trn_name)
   citties = []
-  returned_citties = DB.exec("SELECT * FROM citties WHERE train_id = #{trn_id};")
+  returned_citties = DB.exec("SELECT * FROM citties WHERE train_id = #{trn_id} AND train_name = #{trn_name};")
+  binding.pry
   returned_citties.each() do |citty|
     name = citty.fetch("name")
     id = citty.fetch("id").to_i
-    citties.push(Citty.new({:name => name, :train_id => trn_id, :id => id}))
+    citties.push(Citty.new({:name => name, :train_id => trn_id, :id => id, :train_name => train_name}))
   end
   citties
 end
 def train
   Train.find(@train_id)
+  # Train.find(@train_name)
 end
+
 end

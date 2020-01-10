@@ -1,0 +1,29 @@
+<h1>Train Schedule</h1>
+
+<h2>Trains List & Schedules</h2>
+
+<h3>Click on a train to see its schedule:</h3>
+<% if @trains.any? %>
+  <ul>
+    <% @trains.each do |train| %>
+      <li><a href="/trains/<%= train.id %>"><%= train.name %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>There are currently no trains to display.</p>
+<% end %>
+<form class="" action="/trains/new" method="get">
+  <button type="submit" name="button">Add a new train</button>
+</form>
+
+
+<form action="/trains/search" method="get">
+  <div class="form-group">
+    <label for="search">Search</label>
+    <input id="search" name="search" class="form-control" type="text">
+  </div>
+  <button type="submit" class="btn">Search</button>
+</form>
+
+<!-- <p><a href="/time_table"> Time table</a></p> -->
+<p><a href="/trains">Return to trains list</a></p>

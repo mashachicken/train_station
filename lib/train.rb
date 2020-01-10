@@ -1,3 +1,4 @@
+require 'pry'
 class Train
   attr_accessor :name, :id
 
@@ -44,5 +45,10 @@ class Train
   # Deletes a train from a database by an ID
   def delete
     DB.exec("DELETE FROM trains WHERE id = #{@id};")
+    DB.exec("DELETE FROM citties WHERE train_id = #{@id};")
   end
+  def citties
+  Citty.find_by_train(self.id, self.name)
+end
+
 end
